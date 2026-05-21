@@ -164,10 +164,30 @@ function onResize() {
   composer.setSize(w, h);
 }
 
-// Stub — fully implemented in Task 6 (reduced motion + disposal)
 function disposeVault() {
   cancelAnimationFrame(animFrameId);
   window.removeEventListener('resize', onResize);
+
+  // Kill all ScrollTrigger instances on this page
+  if (window.ScrollTrigger) {
+    window.ScrollTrigger.getAll().forEach(function (st) { st.kill(); });
+  }
+
+  // Dispose all Three.js GPU resources
+  scene.traverse(function (obj) {
+    if (obj.isMesh) {
+      obj.geometry.dispose();
+      var mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+      mats.forEach(function (m) { m.dispose(); });
+    }
+  });
+
+  renderer.dispose();
+  composer.dispose();
+
+  // Remove vault section from DOM
+  var hero = document.getElementById('vault-hero');
+  if (hero) hero.remove();
 }
 
 function startRenderLoop() {
@@ -281,7 +301,17 @@ function initVault() {
   buildLighting();
   buildPostprocessing();
   startRenderLoop();
-  initScrollSequence();
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    // Static: door ajar at 30°, content immediately visible, no scroll pin
+    vaultGroup.rotation.y = -Math.PI * 0.3;
+    var homeContent = document.getElementById('home-content');
+    if (homeContent) homeContent.classList.add('visible');
+  } else {
+    initScrollSequence();
+  }
 
   window.addEventListener('resize', onResize);
 }
