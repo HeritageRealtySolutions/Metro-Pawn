@@ -164,6 +164,12 @@ function onResize() {
   composer.setSize(w, h);
 }
 
+// Stub — fully implemented in Task 6 (reduced motion + disposal)
+function disposeVault() {
+  cancelAnimationFrame(animFrameId);
+  window.removeEventListener('resize', onResize);
+}
+
 function startRenderLoop() {
   function loop() {
     animFrameId = requestAnimationFrame(loop);
