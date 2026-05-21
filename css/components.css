@@ -101,7 +101,7 @@
 .testimonial-text {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   line-height: 1.7;
   color: var(--color-text);
   padding-top: var(--space-6);
@@ -122,7 +122,7 @@
 /* ── CTA section ── */
 .cta-section {
   text-align: center;
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 .cta-heading {
@@ -150,7 +150,7 @@
 }
 
 .brand-story p {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   line-height: 1.9;
   color: var(--color-text-dim);
   margin-bottom: var(--space-6);
@@ -239,7 +239,7 @@
 }
 
 @media (max-width: 768px) {
-  .service-block { grid-template-columns: 1fr; direction: ltr; }
+  .service-block { grid-template-columns: 1fr; }
   .service-block:nth-child(even) { direction: ltr; }
 }
 
@@ -285,7 +285,7 @@
 
 .inventory-card-name {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   margin-bottom: var(--space-2);
 }
 
@@ -359,8 +359,15 @@
   padding: var(--space-3) var(--space-4);
   outline: none;
   transition: border-color var(--dur-fast) var(--ease-hover);
-  appearance: none;
   border-radius: 0;
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9A84C' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
 }
 
 .form-input:focus,

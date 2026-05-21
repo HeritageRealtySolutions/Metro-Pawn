@@ -22,6 +22,7 @@
   --text-h2:     clamp(1.8rem, 3vw, 3rem);
   --text-h3:     clamp(1.2rem, 2vw, 1.8rem);
   --text-body:   1rem;
+  --text-lg:   1.1rem;
   --text-small:  0.875rem;
   --text-label:  0.75rem;
 

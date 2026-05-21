@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-8);
-  background: rgba(10, 10, 10, 0.92);
+  background: rgba(10, 10, 10, 0.97);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: var(--border-dim);
@@ -61,6 +61,8 @@
   background: none;
   border: none;
   padding: var(--space-1);
+  position: relative;
+  z-index: 202;
 }
 
 .nav-toggle span {
@@ -80,7 +82,7 @@
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 199;
+  z-index: 201;
   background: var(--color-bg);
   flex-direction: column;
   align-items: center;
