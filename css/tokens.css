@@ -1,0 +1,52 @@
+/* css/tokens.css — Single source of truth for all design tokens */
+:root {
+  /* Colors */
+  --color-bg:       #0A0A0A;
+  --color-gold:     #C9A84C;
+  --color-text:     #F5F2EC;
+  --color-text-dim: #8A8680;
+  --color-border:   #1E1E1E;
+  --color-surface:  #111111;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Barlow Condensed', 'Helvetica Neue', sans-serif;
+  --font-display-bold:   700;
+  --font-display-light:  300;
+  --font-body-regular:   400;
+  --font-body-medium:    500;
+
+  /* Type scale */
+  --text-hero:   clamp(4rem, 10vw, 9rem);
+  --text-h1:     clamp(2.5rem, 5vw, 5rem);
+  --text-h2:     clamp(1.8rem, 3vw, 3rem);
+  --text-h3:     clamp(1.2rem, 2vw, 1.8rem);
+  --text-body:   1rem;
+  --text-small:  0.875rem;
+  --text-label:  0.75rem;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Borders */
+  --border-gold: 1px solid var(--color-gold);
+  --border-dim:  1px solid var(--color-border);
+  --radius: 0;
+
+  /* Motion */
+  --ease-vault:  cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-hover:  cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:    200ms;
+  --dur-normal:  400ms;
+  --dur-slow:    700ms;
+}
