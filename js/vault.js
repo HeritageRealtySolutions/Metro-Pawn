@@ -178,6 +178,85 @@ function startRenderLoop() {
   loop();
 }
 
+function initScrollSequence() {
+  var gsap = window.gsap;
+  var ScrollTrigger = window.ScrollTrigger;
+  if (!gsap || !ScrollTrigger) {
+    console.warn('Collateral: GSAP not available — vault scroll sequence disabled');
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Timeline scrubs through 4 stages across 400vh of pinned scroll
+  // Total timeline: ~10 units → maps to 400vh (end: '+=400%')
+  var tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#vault-hero',
+      start: 'top top',
+      end: '+=400%',
+      pin: true,
+      anticipatePin: 1,
+      scrub: 2,
+      onLeave: function () {
+        var homeContent = document.getElementById('home-content');
+        if (homeContent) homeContent.classList.add('visible');
+        setTimeout(function () {
+          if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+        }, 800);
+        setTimeout(disposeVault, 2000);
+      },
+    }
+  });
+
+  // Stage 1 — Bolts retract (timeline 0 → ~2.05)
+  // 6 bolts staggered 0.35 apart, each duration 0.3
+  boltMeshes.forEach(function (bolt, i) {
+    tl.to(bolt.position, {
+      z: bolt.position.z - 0.65,
+      duration: 0.3,
+      ease: 'power2.in',
+    }, i * 0.35);
+  });
+
+  // Stage 2 — Handle rotates (timeline 2.5 → 5.0)
+  tl.to(handleGroup.rotation, {
+    z: -Math.PI * 0.4,
+    duration: 2.5,
+    ease: 'power3.inOut',
+  }, 2.5);
+
+  // Stage 3 — Door swings open + camera pulls back (timeline 5.0 → 8.0)
+  tl.to(vaultGroup.rotation, {
+    y: -Math.PI * 0.65,
+    duration: 3.0,
+    ease: 'power2.inOut',
+  }, 5.0);
+
+  tl.to(camera.position, {
+    z: camera.position.z + 1.0,
+    duration: 3.0,
+    ease: 'power2.out',
+  }, 5.0);
+
+  // Stage 4 — Bloom + gold emissive (timeline 8.0 → 10.0)
+  tl.to(bloomPass, {
+    strength: 0.6,
+    duration: 2.0,
+    ease: 'power1.in',
+  }, 8.0);
+
+  goldMaterials.forEach(function (mat) {
+    tl.to(mat, {
+      emissiveIntensity: 1.5,
+      duration: 2.0,
+      ease: 'power1.in',
+    }, 8.0);
+  });
+
+  // Fade scroll hint as soon as scrolling begins
+  tl.to('.vault-hint', { opacity: 0, duration: 0.3 }, 0.1);
+}
+
 function initVault() {
   const canvas = document.getElementById('vault-canvas');
   if (!canvas) return;
@@ -202,6 +281,7 @@ function initVault() {
   buildLighting();
   buildPostprocessing();
   startRenderLoop();
+  initScrollSequence();
 
   window.addEventListener('resize', onResize);
 }
