@@ -208,6 +208,7 @@ function disposeVault() {
 
   cancelAnimationFrame(animFrameId);
   window.removeEventListener('resize', onResize);
+  window.removeEventListener('pagehide', disposeVault);
   if (onOrientationChange) window.removeEventListener('orientationchange', onOrientationChange);
 
   if (vaultST) { vaultST.kill(); vaultST = null; }
@@ -231,7 +232,6 @@ function initScrollSequence() {
   var gsap = window.gsap;
   var ScrollTrigger = window.ScrollTrigger;
   if (!gsap || !ScrollTrigger) {
-    console.warn('Metro Pawn: GSAP not available — vault scroll sequence disabled');
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
