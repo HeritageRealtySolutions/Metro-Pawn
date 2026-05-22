@@ -200,6 +200,15 @@ function startRenderLoop() {
   loop();
 }
 
+// ─── Loading screen ───────────────────────────────────────────────────────────
+
+function hideLoadingScreen() {
+  var el = document.getElementById('vault-loading');
+  if (!el) return;
+  el.classList.add('vl-ready');
+  el.addEventListener('transitionend', function () { el.remove(); }, { once: true });
+}
+
 // ─── Disposal (called on page unload) ────────────────────────────────────────
 
 function disposeVault() {
@@ -449,6 +458,9 @@ function initVault() {
     initScrollSequence();
   }
 
+  // Scene is built and render loop is running — reveal the page
+  requestAnimationFrame(function () { requestAnimationFrame(hideLoadingScreen); });
+
   window.addEventListener('resize', onResize);
   // iOS fires orientationchange before resize; the 100ms delay lets viewport
   // dimensions settle before recalculating.
@@ -457,4 +469,9 @@ function initVault() {
   window.addEventListener('pagehide', disposeVault);
 }
 
-initVault();
+try {
+  initVault();
+} catch (err) {
+  hideLoadingScreen();
+  throw err;
+}

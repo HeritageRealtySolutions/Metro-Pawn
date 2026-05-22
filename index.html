@@ -16,6 +16,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,700&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/tokens.css">
@@ -23,8 +25,18 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Preload Three.js modules so they fetch in parallel with HTML parsing -->
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/build/three.module.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/postprocessing/EffectComposer.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/postprocessing/RenderPass.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/postprocessing/UnrealBloomPass.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/postprocessing/ShaderPass.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/shaders/GammaCorrectionShader.js" crossorigin>
+  <link rel="modulepreload" href="https://unpkg.com/three@0.165.0/examples/jsm/environments/RoomEnvironment.js" crossorigin>
+
+  <!-- defer: downloads in parallel with HTML parsing, executes after — no render block -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <script type="importmap">
   {
@@ -34,8 +46,60 @@
     }
   }
   </script>
+
+  <!-- Loading screen: inline so it renders before any external CSS -->
+  <style>
+    #vault-loading {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #0A0A0A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      transition: opacity 0.5s ease;
+    }
+    #vault-loading.vl-ready {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .vl-wordmark {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      color: #C9A84C;
+      text-transform: uppercase;
+    }
+    .vl-track {
+      width: 80px;
+      height: 1px;
+      background: rgba(201, 168, 76, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .vl-bar {
+      position: absolute;
+      inset: 0;
+      background: #C9A84C;
+      transform: translateX(-100%);
+      animation: vl-sweep 1.6s ease-in-out infinite;
+    }
+    @keyframes vl-sweep {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(100%);  }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
 </head>
 <body>
+
+  <div id="vault-loading" role="status" aria-label="Loading Metro Pawn">
+    <span class="vl-wordmark">Metro Pawn</span>
+    <div class="vl-track" aria-hidden="true"><div class="vl-bar"></div></div>
+  </div>
 
   <nav class="nav" aria-label="Primary navigation">
     <a href="index.html" class="nav-logo">Metro Pawn</a>
@@ -162,13 +226,20 @@
       }
       el.textContent += msg + '\n';
     }
-    window.addEventListener('error', function(e) { show('JS ERROR: ' + e.message + '\n  ' + e.filename + ':' + e.lineno); });
-    window.addEventListener('unhandledrejection', function(e) { show('PROMISE REJECTION: ' + (e.reason && e.reason.message || e.reason)); });
+    // On any JS error, ensure the loading screen doesn't trap the user
+    function clearLoader() {
+      var loader = document.getElementById('vault-loading');
+      if (loader) loader.classList.add('vl-ready');
+    }
+    window.addEventListener('error', function(e) { show('JS ERROR: ' + e.message + '\n  ' + e.filename + ':' + e.lineno); clearLoader(); });
+    window.addEventListener('unhandledrejection', function(e) { show('PROMISE REJECTION: ' + (e.reason && e.reason.message || e.reason)); clearLoader(); });
     window.__debugLog = show;
+    // Hard timeout: if vault hasn't signalled ready in 15s, clear the loader anyway
+    setTimeout(clearLoader, 15000);
   })();
   </script>
   <script type="module" src="js/vault.js"></script>
-  <script src="js/scroll.js"></script>
-  <script src="js/nav.js"></script>
+  <script src="js/scroll.js" defer></script>
+  <script src="js/nav.js" defer></script>
 </body>
 </html>
