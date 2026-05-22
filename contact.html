@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Collateral | Waller, TX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,700&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <nav class="nav" aria-label="Primary navigation">
+    <a href="index.html" class="nav-logo">Collateral</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="inventory.html">Inventory</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-overlay" role="dialog" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="inventory.html">Inventory</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="page-wrapper">
+
+    <header class="page-hero">
+      <p class="label page-hero-label">Get In Touch</p>
+      <h1 class="page-hero-title">Contact</h1>
+    </header>
+
+    <section class="section" aria-label="Contact information and form">
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <p class="label contact-info-label">Location</p>
+            <p class="contact-info-value">123 Placeholder Rd<br>Waller, TX 77484</p>
+          </div>
+          <div class="contact-info-item">
+            <p class="label contact-info-label">Phone</p>
+            <p class="contact-info-value">(555) 000-0000</p>
+          </div>
+          <div class="contact-info-item">
+            <p class="label contact-info-label">Hours</p>
+            <p class="contact-info-value" style="font-size:1rem; font-family:var(--font-body); line-height:2;">
+              Mon&ndash;Fri: 9am &ndash; 6pm<br>
+              Saturday: 10am &ndash; 4pm<br>
+              Sunday: Closed
+            </p>
+          </div>
+          <div class="contact-map-placeholder" aria-label="Map placeholder — Waller, TX">
+            Waller, TX
+          </div>
+        </div>
+
+        <form class="contact-form" action="#" method="post" novalidate aria-label="Contact form">
+          <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-input" type="text" id="name" name="name" required autocomplete="name" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="subject">Subject</label>
+            <select class="form-select" id="subject" name="subject">
+              <option value="">Select a topic</option>
+              <option value="appraisal">Request an Appraisal</option>
+              <option value="inventory">Inventory Inquiry</option>
+              <option value="loan">Loan Information</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea class="form-textarea" id="message" name="message" required placeholder="Tell us what you're looking for or what you'd like to bring in."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold" style="width:100%;">Send Message</button>
+        </form>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-logo">Collateral</a>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="about.html">About</a>
+          <a href="services.html">Services</a>
+          <a href="inventory.html">Inventory</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <p class="footer-location">Waller, TX &mdash; (555) 000-0000</p>
+        <p class="footer-copy">&copy; 2026 Collateral. All rights reserved.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>
