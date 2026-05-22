@@ -276,9 +276,12 @@ function initScrollSequence() {
       start: 'top top',
       end: '+=400%',
       pin: true,
-      anticipatePin: 1,
-      // Higher scrub value on mobile = smoother feel under finger drag.
-      scrub: isMobile ? 3 : 2,
+      // anticipatePin monitors scroll velocity to predict when pinning fires.
+      // On iOS this conflicts with momentum scroll — disable on mobile.
+      anticipatePin: isMobile ? 0 : 1,
+      // scrub:3 on mobile felt stuck (3s lag behind finger). 1.5 is tight
+      // enough to feel responsive without juddering on low-end hardware.
+      scrub: isMobile ? 1.5 : 2,
       // Snap to end state when user stops scrolling mid-sequence.
       fastScrollEnd: true,
 
@@ -433,6 +436,12 @@ function initVault() {
   buildVaultDoor();
   buildLighting();
   buildPostprocessing();
+  // Pre-compile all 4 shader programs while the loading screen is visible.
+  // Without this, compilation defers to the first renderer.render() call
+  // (Frame N inside startRenderLoop), blocking the main thread 1–4s after
+  // the vault appears. With this call the freeze is buried in init — the
+  // loading screen covers it and the first render frame is instant.
+  renderer.compile(scene, camera);
   startRenderLoop();
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
