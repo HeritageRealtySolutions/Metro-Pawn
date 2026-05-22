@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Collateral — Premium Pawn | Waller, TX</title>
-  <meta name="description" content="Collateral is Waller, TX's premium pawn shop. Buy, sell, or get a loan on jewelry, watches, electronics, and more.">
+  <title>Metro Pawn — Premium Pawn | Waller, TX</title>
+  <meta name="description" content="Metro Pawn is Waller, TX's premium pawn shop. Buy, sell, or get a loan on jewelry, watches, electronics, and more.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
 <body>
 
   <nav class="nav" aria-label="Primary navigation">
-    <a href="index.html" class="nav-logo">Collateral</a>
+    <a href="index.html" class="nav-logo">Metro Pawn</a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
@@ -53,8 +53,20 @@
 
   <section id="vault-hero" aria-label="Vault entrance">
     <canvas id="vault-canvas" aria-hidden="true"></canvas>
+
+    <!-- Revealed during stage 4 of the vault sequence -->
+    <div class="hero-content" id="hero-content-panel" aria-hidden="true">
+      <p class="label hero-eyebrow">Metro Pawn &mdash; Waller, TX</p>
+      <h1 class="hero-headline">Honest value.<br>Same-day cash.</h1>
+      <p class="hero-sub">Jewelry, watches, electronics, firearms. Buy, sell, or get a collateral loan &mdash; straight talk, no pressure.</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-ghost">Get an Appraisal</a>
+        <a href="inventory.html" class="btn btn-gold">Browse Inventory</a>
+      </div>
+    </div>
+
     <div class="vault-hint" aria-hidden="true">
-      <span class="vault-hint-text">Scroll to enter</span>
+      <span class="vault-hint-text">Scroll to open</span>
       <div class="vault-hint-line"></div>
     </div>
   </section>
@@ -117,7 +129,7 @@
 
     <footer class="footer">
       <div class="footer-inner">
-        <a href="index.html" class="footer-logo">Collateral</a>
+        <a href="index.html" class="footer-logo">Metro Pawn</a>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="about.html">About</a>
           <a href="services.html">Services</a>
@@ -125,12 +137,28 @@
           <a href="contact.html">Contact</a>
         </nav>
         <p class="footer-location">Waller, TX &mdash; (555) 000-0000</p>
-        <p class="footer-copy">&copy; 2026 Collateral. All rights reserved.</p>
+        <p class="footer-copy">&copy; 2026 Metro Pawn. All rights reserved.</p>
       </div>
     </footer>
 
   </main>
 
+  <script>
+  (function(){
+    var el;
+    function show(msg) {
+      if (!el) {
+        el = document.createElement('pre');
+        el.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#c00;color:#fff;padding:8px;font:12px monospace;max-height:40vh;overflow:auto;white-space:pre-wrap;';
+        document.body.appendChild(el);
+      }
+      el.textContent += msg + '\n';
+    }
+    window.addEventListener('error', function(e) { show('JS ERROR: ' + e.message + '\n  ' + e.filename + ':' + e.lineno); });
+    window.addEventListener('unhandledrejection', function(e) { show('PROMISE REJECTION: ' + (e.reason && e.reason.message || e.reason)); });
+    window.__debugLog = show;
+  })();
+  </script>
   <script type="module" src="js/vault.js"></script>
   <script src="js/scroll.js"></script>
   <script src="js/nav.js"></script>
