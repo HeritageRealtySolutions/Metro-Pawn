@@ -239,8 +239,13 @@
 }
 
 @media (max-width: 768px) {
-  .service-block { grid-template-columns: 1fr; }
+  .service-block {
+    grid-template-columns: 1fr;
+    padding: var(--space-12) var(--space-6);
+    gap: var(--space-8);
+  }
   .service-block:nth-child(even) { direction: ltr; }
+  .service-block-number { font-size: clamp(3rem, 12vw, 5rem); }
 }
 
 /* ── Inventory grid ── */
@@ -381,6 +386,20 @@
 
 @media (max-width: 768px) {
   .contact-grid { grid-template-columns: 1fr; }
+  .inventory-intro { padding: var(--space-8) var(--space-6); }
+}
+
+@media (max-width: 480px) {
+  .hero-actions,
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn,
+  .cta-buttons .btn {
+    text-align: center;
+  }
 }
 
 /* ── Utilities ── */

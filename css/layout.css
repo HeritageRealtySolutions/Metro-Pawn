@@ -104,6 +104,7 @@
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
+  .nav { padding: 0 var(--space-4); }
 }
 
 /* ── Vault hero ── */
@@ -350,4 +351,19 @@
     text-align: left;
   }
   .footer-nav { flex-wrap: wrap; }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .page-hero {
+    padding: var(--space-12) var(--space-6) var(--space-8);
+  }
+
+  .page-hero-title {
+    max-width: 100%;
+    white-space: normal;
+  }
 }

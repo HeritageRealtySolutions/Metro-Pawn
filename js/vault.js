@@ -10,6 +10,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 let renderer, composer, scene, camera, animFrameId;
 let envTexture, vaultST;
 let vaultGroup, handleGroup;
+let onOrientationChange;
 const boltMeshes = [];
 const goldMaterials = [];
 let bloomPass;
@@ -167,6 +168,7 @@ function disposeVault() {
 
   cancelAnimationFrame(animFrameId);
   window.removeEventListener('resize', onResize);
+  if (onOrientationChange) window.removeEventListener('orientationchange', onOrientationChange);
 
   if (vaultST) { vaultST.kill(); vaultST = null; }
 
@@ -384,6 +386,10 @@ function initVault() {
   }
 
   window.addEventListener('resize', onResize);
+  // iOS fires orientationchange before resize; the 100ms delay lets the
+  // viewport dimensions settle before we recalculate.
+  onOrientationChange = function () { setTimeout(onResize, 100); };
+  window.addEventListener('orientationchange', onOrientationChange);
   // Dispose WebGL cleanly when user leaves the page
   window.addEventListener('pagehide', disposeVault);
 }
