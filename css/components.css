@@ -382,3 +382,27 @@
 @media (max-width: 768px) {
   .contact-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Utilities ── */
+.btn-full {
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.inventory-intro-text {
+  color: var(--color-text-dim);
+  max-width: 600px;
+  line-height: 1.8;
+}
+
+.inventory-intro-link {
+  color: var(--color-gold);
+  border-bottom: var(--border-gold);
+}
+
+.contact-info-hours {
+  font-size: var(--text-body);
+  font-family: var(--font-body);
+  line-height: 2;
+}
